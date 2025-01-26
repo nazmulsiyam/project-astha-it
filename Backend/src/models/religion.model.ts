@@ -11,6 +11,7 @@ const religionSchema = new Schema<IReligion>({
   name: {
     type: String,
     required: [true, 'Name is required'],
+    unique: true,
   },
   description: {
     type: String,
