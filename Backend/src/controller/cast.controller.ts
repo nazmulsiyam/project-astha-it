@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
-import { Religion } from '../models/religion.model';
 import { Cast } from '../models/cast.model';
+import { Religion } from '../models/religion.model';
 
 
 // Create a new Cast
@@ -48,6 +48,27 @@ const getCastById = async (req: Request, res: Response): Promise<void> => {
   }
 };
 
+// Get all Casts under a specific Religion
+const getCastsByReligionId = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const { id: religionId } = req.params;
+
+    // Check if the religion exists
+    const religion = await Religion.findById(religionId);
+    if (!religion) {
+      res.status(404).json({ message: 'Religion not found' });
+      return;
+    }
+
+    // Fetch casts related to the religionId
+    const casts = await Cast.find({ religionId }).populate('religionId', 'name description');
+    res.status(200).json({ message: 'Casts fetched successfully', data: casts });
+  } catch (err: any) {
+    res.status(500).json({ message: 'Error fetching casts', error: err.message });
+  }
+};
+
+
 // Update a Cast
 const updateCast = async (req: Request, res: Response): Promise<void> => {
   try {
@@ -94,4 +115,5 @@ export const castController = {
   getCastById,
   updateCast,
   deleteCast,
+  getCastsByReligionId
 };

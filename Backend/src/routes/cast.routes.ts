@@ -6,6 +6,7 @@ const router = express.Router();
 router.get("/", castController.getCasts);
 
 router.get("/:id", castController.getCastById);
+router.get('/religion/:id', castController.getCastsByReligionId);
 
 router.post("/", castController.createCast);
 

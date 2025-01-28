@@ -54,6 +54,24 @@ const getCastById = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
         res.status(500).json({ message: 'Error fetching cast', error: err.message });
     }
 });
+// Get all Casts under a specific Religion
+const getCastsByReligionId = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { id: religionId } = req.params;
+        // Check if the religion exists
+        const religion = yield religion_model_1.Religion.findById(religionId);
+        if (!religion) {
+            res.status(404).json({ message: 'Religion not found' });
+            return;
+        }
+        // Fetch casts related to the religionId
+        const casts = yield cast_model_1.Cast.find({ religionId }).populate('religionId', 'name description');
+        res.status(200).json({ message: 'Casts fetched successfully', data: casts });
+    }
+    catch (err) {
+        res.status(500).json({ message: 'Error fetching casts', error: err.message });
+    }
+});
 // Update a Cast
 const updateCast = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
@@ -97,4 +115,5 @@ exports.castController = {
     getCastById,
     updateCast,
     deleteCast,
+    getCastsByReligionId
 };
