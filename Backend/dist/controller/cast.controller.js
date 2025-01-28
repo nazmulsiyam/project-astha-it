@@ -10,8 +10,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.castController = void 0;
-const religion_model_1 = require("../models/religion.model");
 const cast_model_1 = require("../models/cast.model");
+const religion_model_1 = require("../models/religion.model");
 // Create a new Cast
 const createCast = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
